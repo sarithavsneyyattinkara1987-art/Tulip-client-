@@ -27,6 +27,7 @@ public class AdinStyleScreen extends Screen {
     private float categoryScroll;
     private float shownCategoryScroll;
     private boolean compactSettingsView;
+    private ModuleSetting awaitingKeybind;
 
     public AdinStyleScreen() {
         super(Text.literal("Adin"));
@@ -148,6 +149,9 @@ public class AdinStyleScreen extends Screen {
                 context.drawCenteredTextWithShadow(textRenderer, setting.getValue(), x + width - 34, y + 8, 0xFF101725);
             } else if (setting.isChoice()) {
                 context.drawTextWithShadow(textRenderer, "< " + setting.getValue() + " >", x + 12, y + 24, 0xFF9FB5E8);
+            } else if (setting.isKeybind()) {
+                context.drawTextWithShadow(textRenderer,
+                        setting == awaitingKeybind ? "Press a key" : setting.getValue(), x + 12, y + 24, 0xFF9FB5E8);
             } else {
                 context.drawTextWithShadow(textRenderer, setting.getValue(), x + width - 100, y + 6, 0xFF9FB5E8);
                 int trackX = x + 12;
@@ -164,6 +168,14 @@ public class AdinStyleScreen extends Screen {
 
     @Override
     public boolean mouseClicked(Click click, boolean doubleClick) {
+        if (awaitingKeybind != null) {
+            if (click.button() <= 7) {
+                awaitingKeybind.setKeyCode(-click.button() - 1);
+                ClientConfig.save();
+            }
+            awaitingKeybind = null;
+            return true;
+        }
         if (click.button() != 0) return super.mouseClicked(click, doubleClick);
         int panelWidth = panelWidth();
         int panelHeight = panelHeight();
@@ -229,7 +241,8 @@ public class AdinStyleScreen extends Screen {
             int row = (int) ((mouseY - (contentTop + 38) + shownSettingScroll) / SETTING_ROW_HEIGHT);
             if (row >= 0 && row < settings.size()) {
                 ModuleSetting setting = settings.get(row);
-                if (setting.isToggle()) setting.toggle();
+                if (setting.isKeybind()) awaitingKeybind = setting;
+                else if (setting.isToggle()) setting.toggle();
                 else if (setting.isChoice()) setting.cycleChoice();
                 else {
                     int trackX = settingsX + 12;
@@ -284,6 +297,14 @@ public class AdinStyleScreen extends Screen {
 
     @Override
     public boolean keyPressed(net.minecraft.client.input.KeyInput input) {
+        if (awaitingKeybind != null) {
+            if (input.key() != GLFW.GLFW_KEY_ESCAPE) {
+                awaitingKeybind.setKeyCode(input.key());
+                ClientConfig.save();
+            }
+            awaitingKeybind = null;
+            return true;
+        }
         if (input.key() == GLFW.GLFW_KEY_ESCAPE || input.key() == GLFW.GLFW_KEY_RIGHT_SHIFT) {
             close();
             return true;

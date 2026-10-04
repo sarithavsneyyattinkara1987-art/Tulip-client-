@@ -78,6 +78,7 @@ public final class ClientConfig {
     private static void loadSettings(Module module, JsonObject savedSettings) {
         var settings = module.getSettings();
         settings.stream().filter(ModuleSetting::isToggle).forEach(setting -> loadSetting(setting, savedSettings));
+        settings.stream().filter(ModuleSetting::isKeybind).forEach(setting -> loadSetting(setting, savedSettings));
         settings.stream().filter(setting -> setting.getName().equals("Maximum cooldown"))
                 .forEach(setting -> loadSetting(setting, savedSettings));
         settings.stream().filter(setting -> !setting.isToggle() && !setting.getName().equals("Maximum cooldown"))

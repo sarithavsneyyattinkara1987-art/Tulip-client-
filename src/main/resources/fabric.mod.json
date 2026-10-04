@@ -7,10 +7,7 @@
   "authors": [
     "Tulip"
   ],
-  "contact": {
-    "homepage": "https://example.com/tulip"
-  },
-  "license": "MIT",
+  "license": "CC0-1.0",
   "environment": "client",
   "mixins": [
     "tulip-client.mixins.json"

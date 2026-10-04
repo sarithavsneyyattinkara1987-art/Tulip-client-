@@ -3,6 +3,7 @@ package dev.tulip.client.module;
 import com.google.gson.JsonPrimitive;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,5 +32,16 @@ class CriticalsModuleTest {
         assertEquals("Mospixel", setting.saveValue().getAsString());
         setting.loadValue(new JsonPrimitive("Invalid"));
         assertEquals("Mospixel", selected.get());
+    }
+
+    @Test
+    void keybindSettingsPersistTheirKeyCode() {
+        ModuleSetting setting = ModuleSetting.keybind("Throw Key", 75);
+
+        assertTrue(setting.isKeybind());
+        assertEquals(75, setting.saveValue().getAsInt());
+        setting.loadValue(new JsonPrimitive(86));
+        assertEquals(86, setting.getKeyCode());
+        assertEquals(86, setting.saveValue().getAsInt());
     }
 }

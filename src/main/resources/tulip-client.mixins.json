@@ -5,6 +5,7 @@
   "refmap": "tulip-client-refmap.json",
   "client": [
     "MinecraftClientAccessor",
+    "KeyBindingMixin",
     "ClientPlayerInteractionManagerMixin",
     "PlayerEntityMixin",
     "LivingEntityMixin",

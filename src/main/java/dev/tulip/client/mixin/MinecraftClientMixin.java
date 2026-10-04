@@ -1,6 +1,7 @@
 package dev.tulip.client.mixin;
 
 import dev.tulip.client.module.AntiMissModule;
+import dev.tulip.client.module.STapModule;
 import dev.tulip.client.module.SwordSwapModule;
 import dev.tulip.client.module.ShieldBreakerModule;
 import dev.tulip.client.module.TotemHitModule;
@@ -23,6 +24,7 @@ public class MinecraftClientMixin {
         TotemHitModule.beforeAttack(client);
         SwordSwapModule.beforeAttack(client);
         WTapModule.beforeAttack(client);
+        STapModule.beforeAttack(client);
     }
 
     @Inject(method = "doAttack()Z", at = @At("HEAD"), cancellable = true)
