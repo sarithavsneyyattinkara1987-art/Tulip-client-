@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "dev.tulip.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "tulip-client-refmap.json",
+  "client": [
+    "MinecraftClientAccessor",
+    "ClientPlayerInteractionManagerMixin",
+    "PlayerEntityMixin",
+    "LivingEntityMixin",
+    "EntityMixin",
+    "ProjectileUtilMixin",
+    "MinecraftClientMixin",
+    "ClientPlayNetworkHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

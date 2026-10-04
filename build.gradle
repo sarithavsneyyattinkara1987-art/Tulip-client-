@@ -1,0 +1,60 @@
+plugins {
+    id 'fabric-loom' version '1.13.6'
+    id 'maven-publish'
+}
+
+version = project.version
+group = project.group
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    annotationProcessor "net.fabricmc:sponge-mixin:0.17.0+mixin.0.8.7"
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+loom {
+    mixin {
+        useLegacyMixinAp = true
+        defaultRefmapName = "tulip-client-refmap.json"
+    }
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    from('LICENSE') {
+        rename { "${it}_${project.name}" }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

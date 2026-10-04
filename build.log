@@ -1,0 +1,22 @@
+
+[Incubating] Problems report is available at: file:///workspaces/tulip-new-client/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'tulip-client'.
+> Could not resolve all artifacts for configuration 'classpath'.
+   > Could not resolve net.fabricmc:fabric-loom:1.13.6.
+     Required by:
+         root project : > fabric-loom:fabric-loom.gradle.plugin:1.13.6
+      > Plugin net.fabricmc:fabric-loom:1.13.6 requires at least Gradle 8.14. This build uses Gradle 8.12.
+
+* Try:
+> Upgrade to at least Gradle 8.14. See the instructions at https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#sub:updating-gradle.
+> Downgrade plugin net.fabricmc:fabric-loom:1.13.6 to an older version compatible with Gradle 8.12.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2s
